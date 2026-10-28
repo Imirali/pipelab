@@ -37,11 +37,11 @@ def get_query(url:str, timeout:int = 10)->dict|list:
     """Get the JSON response from the Hacker News API.
 
     Args:
-        endpoint (str): The endpoint path, e.g. ``topstories.json`` or
-            ``item/<id>.json``.
+        url (str): The full request URL.
+        timeout (int, optional): Request timeout in seconds. Defaults to 10.
 
     Returns:
-        dict: The parsed JSON response.
+        dict | list: The parsed JSON response, or an empty list on request error.
     """
 
     try:
@@ -94,9 +94,9 @@ def get_titles(stories:list[dict])->list:
 
 def main():
 
-    responce_top_stories_ids = get_query(build_url_top_stories(BASE_URL,TOP_STORIES_ENDPOINT))
+    response_top_stories_ids = get_query(build_url_top_stories(BASE_URL,TOP_STORIES_ENDPOINT))
 
-    ids_stories = take_n_ids_from_response(responce_top_stories_ids, QUANTITY_ID)
+    ids_stories = take_n_ids_from_response(response_top_stories_ids, QUANTITY_ID)
 
     stories = get_details_by_id(ids_stories)
 
